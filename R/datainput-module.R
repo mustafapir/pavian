@@ -537,7 +537,7 @@ dataInputModule <- function(input, output, session,
       # sample_data <- read.delim(tsv_files[1], header = TRUE, sep = "\t")
 
       read_server_directory(
-        paste0(tsv_file_path, "run2490/kraken_tsv/kraken2/raw_kraken"),
+        paste0(tsv_file_path, "run2490/kreport_tsv/kraken2/raw_kraken"),
         include_base_dir = FALSE
       )
 
