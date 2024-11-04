@@ -1,5 +1,5 @@
 #vim: noai:ts=2:sw=2 
-  
+
 library(shiny)
 library(rhandsontable)
 library(shinyFileTree)
@@ -12,15 +12,15 @@ serverDataPanel <- function(ns) {
     " You may also use wildcards to directly upload specified paths.",
     br(),
     div(id="server_data_dir_div",
-    shinyWidgets::searchInput(ns("search_data_dir"),
-                              label = "Specify directory on machine running Pavian",
-                              value = getOption("pavian.server_dir", ""),
-                              btnReset = icon("level-up", lib="glyphicon"),
-                              resetValue = NULL,
-                              width = "100%",
-                              btnSearch = icon("server"))),
+        shinyWidgets::searchInput(ns("search_data_dir"),
+                                  label = "Specify directory on machine running Pavian",
+                                  value = getOption("pavian.server_dir", ""),
+                                  btnReset = icon("level-up", lib="glyphicon"),
+                                  resetValue = NULL,
+                                  width = "100%",
+                                  btnSearch = icon("server"))),
     div(style="max-height:400px; overflow-y: scroll",
-      shinyFileTree::shinyFileTreeOutput(ns('file_tree'))
+        shinyFileTree::shinyFileTreeOutput(ns('file_tree'))
     ),
     shinyjs::hidden(actionButton(ns("btn_read_tree_dirs"), "Read selected directories")),
     uiOutput(ns('rud'))
@@ -43,7 +43,7 @@ exampleDataPanel <- function(ns) {
       shinydashboard::box("Example file directory is not present, cannot load example files.")
     } else {
       actionButton(ns("btn_load_example_data"), label = "Load example datasets")
-     }
+    }
     }
   )
 }
@@ -53,6 +53,7 @@ uploadFilePanel <- function(ns) {
            "Upload metagenomics report files from the local computer. If selecting multiple files does not work, please
             try with a different browser. With each sample set, you may also include meta-data with a colon-separated sample_data.csv file 
             that has at least the columns 'Name' and 'ReportFile'.",
+           #textOutput(ns("sometext")),
            fileInput(
              ns("file_upload"),
              label="",
@@ -155,7 +156,7 @@ dataInputModule <- function(input, output, session,
       recently_used_dirs$val <- readLines(recently_used_dir_user_config)
     }
   }
-
+  
   observeEvent(pavian_options$server_dir, {
     req(pavian_options$server_dir)
     # require(shinyWidgets)
@@ -193,12 +194,12 @@ dataInputModule <- function(input, output, session,
       column(
         6,
         div(class = "styled-radios",
-        radioButtons(
-          ns("sample_set_select"),
-          label = NULL,
-          choices = sample_set_names,
-          selected = ifelse(is.null(sample_sets$selected), sample_set_names[1], sample_sets$selected)
-        )
+            radioButtons(
+              ns("sample_set_select"),
+              label = NULL,
+              choices = sample_set_names,
+              selected = ifelse(is.null(sample_sets$selected), sample_set_names[1], sample_sets$selected)
+            )
         )
       ),
       column(
@@ -253,16 +254,16 @@ dataInputModule <- function(input, output, session,
     }
   
   observeEvent(input$btn_load_example_data, {
-      read_server_directory(
-        system.file("shinyapp", "example-data", package = "pavian"),
-        include_base_dir = FALSE
-      )
+    read_server_directory(
+      system.file("shinyapp", "example-data", package = "pavian"),
+      include_base_dir = FALSE
+    )
   })
   
   display_tree <- reactiveValues(val = FALSE)
-
+  
   file_tree_dir <- reactiveValues(val = NULL)
-
+  
   #observeEvent(input$search_data_dir, {
   #})
   
@@ -279,20 +280,20 @@ dataInputModule <- function(input, output, session,
                                                                                       max_depth=1,
                                                                                       show_dir_info=TRUE)),
                                  opts = shinyFileTree::shinyFileTreeOpts(
-                                            animation = FALSE, 
-                                            themes.stripes = FALSE,
-                                            multiple = TRUE),
+                                   animation = FALSE, 
+                                   themes.stripes = FALSE,
+                                   multiple = TRUE),
                                  plugins = c("wholerow", "types"))
   })
-
+  
   observeEvent(input$file_tree_dblclick, {
     #message("doubleclick observed")
     fnames <- sub(" \\([0-9]+ f[io].*\\)$", "", input$file_tree_selected)
     if (dir.exists(fnames)) {
-    tryCatch({
-      shinyWidgets::updateSearchInput(session, "search_data_dir", value = fnames)
-      file_tree_dir$val <- fnames
-    }, error = message)
+      tryCatch({
+        shinyWidgets::updateSearchInput(session, "search_data_dir", value = fnames)
+        file_tree_dir$val <- fnames
+      }, error = message)
     }
   })
   
@@ -398,15 +399,15 @@ dataInputModule <- function(input, output, session,
       fname <- file.path(dirname, inFile$name[i])
       file.rename(inFile$datapath[i], fname)
       tryCatch({
-      if (grepl(".zip$", fname, ignore.case = T)) {
+        if (grepl(".zip$", fname, ignore.case = T)) {
           if (length(unzip(fname, exdir = dirname)) > 0) { 
             file.remove(fname)
           }
-      } else if (grepl(".gz$|.bzip2$|.xz$|.bz2$", fname, ignore.case = T)) {
+        } else if (grepl(".gz$|.bzip2$|.xz$|.bz2$", fname, ignore.case = T)) {
           if (length(untar(fname, exdir = dirname)) > 0) { 
             file.remove(fname)
           }
-      }}, error = message)
+        }}, error = message)
     }
     
     read_server_directory(dirname(inFile$datapath[1]), "Uploaded sample set")
@@ -524,6 +525,43 @@ dataInputModule <- function(input, output, session,
   
   onRestore(function(state) {
     sample_sets$val <- state$values$sample_sets_val
+  })
+  
+  
+  observe({
+    tsv_file_path <- script_path()
+    tsv_files <- list.dirs(paste0(tsv_file_path, "run2490/kraken_tsv/kraken2/raw_kraken"), full.names = TRUE, recursive = FALSE)
+    if (length(tsv_files) > 0) {
+      message(sprintf("Loading .tsv file from: %s", tsv_files[1]))
+      # Code to load the data from the .tsv file
+      # sample_data <- read.delim(tsv_files[1], header = TRUE, sep = "\t")
+
+      read_server_directory(
+        paste0(tsv_file_path, "run2490/kraken_tsv/kraken2/raw_kraken"),
+        include_base_dir = FALSE
+      )
+
+      # sample_sets$val <- list(MetaPhlanTSV = tsv_files[1])
+      # sample_sets$selected <- "MetaPhlanTSV"
+    }
+  })
+  
+  workdir<-reactive({
+    getwd()
+  })
+  
+  script_path<-reactive({
+    if (Sys.info()[[4]] == 'PHAGO') {
+      
+    } else {
+      return("/home/rstudio/")
+      #"."
+    }
+  })
+  
+  output$sometext<-renderText({
+    # list.dirs(paste0(script_path(), "run2490/kraken_tsv/kraken2/raw_kraken"), full.names = TRUE, recursive = FALSE)
+    list.dirs(workdir(), full.names = TRUE, recursive = FALSE)
   })
   
   return(sample_sets)
