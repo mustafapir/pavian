@@ -8,7 +8,9 @@
 #' @export
 dashboardUI <- function(request) {
   dashboardPage(skin="black", title = "Pavian",
-                dashboardHeader(title = "",
+                                  dashboardHeader(title = tags$div(
+                                    tags$img(src = "Via_Scientific_Logo.jpg", height = "50px", style = "vertical-align: middle; margin-right: 10px;")
+                                  ),
                                 #tags$li(class = "dropdown",
                                 #        tags$img(src=system.file("shinyapp","www", "baboon-outline.png", package="pavian"))
                                 #),

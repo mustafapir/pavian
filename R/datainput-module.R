@@ -527,10 +527,20 @@ dataInputModule <- function(input, output, session,
     sample_sets$val <- state$values$sample_sets_val
   })
   
+  runid<-reactive({
+    folders<-list.dirs(recursive = FALSE)
+    run<-folders[grepl("run", folders)]
+    if(length(run) > 0){
+      x<-run
+    } else {
+      x<-""
+    }
+    x
+  })
   
   observe({
-    tsv_file_path <- script_path()
-    tsv_files <- list.dirs(paste0(tsv_file_path, "run2490/kraken_tsv/kraken2/raw_kraken"), full.names = TRUE, recursive = FALSE)
+    tsv_file_path <- paste0(script_path(), runid())
+    tsv_files <- list.dirs(paste0(tsv_file_path, "/kraken_tsv/kraken2/raw_kraken"), full.names = TRUE, recursive = FALSE)
     if (length(tsv_files) > 0) {
       message(sprintf("Loading .tsv file from: %s", tsv_files[1]))
       # Code to load the data from the .tsv file
