@@ -67,7 +67,7 @@ runApp <- function(cache_dir = "cache",
 
   old_options <- options(new_options)
 
-  shiny::shinyApp(pavian::dashboardUI, pavian::pavianServer, enableBookmarking=enableBookmarking, options = list(...))
+  shiny::shinyApp(pavian::dashboardUI, pavian::pavianServer, enableBookmarking=enableBookmarking, options = list(...), host = "0.0.0.0", port = 8789)
 
   ## TODO: Restoring options like this does not work - we never get here after shiny::runApp as the server keeps running
   #options(old_options)
