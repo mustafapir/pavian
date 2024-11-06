@@ -1,6 +1,0 @@
-classifier,clade,tax_id,abcd
-kraken_bracken,Bacillota,1239,0.65508
-kraken_bracken,Actinomycetota,201174,0.0
-kraken_bracken,Pseudomonadota,1224,0.29084
-kraken_bracken,Bacteroidota,976,0.0
-kraken_bracken,Chordata,7711,0.05371
