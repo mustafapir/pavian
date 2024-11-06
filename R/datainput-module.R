@@ -53,7 +53,7 @@ uploadFilePanel <- function(ns) {
            "Upload metagenomics report files from the local computer. If selecting multiple files does not work, please
             try with a different browser. With each sample set, you may also include meta-data with a colon-separated sample_data.csv file 
             that has at least the columns 'Name' and 'ReportFile'.",
-           textOutput(ns("sometext")),
+           # textOutput(ns("sometext")),
            fileInput(
              ns("file_upload"),
              label="",
@@ -528,7 +528,7 @@ dataInputModule <- function(input, output, session,
   })
   
   runid<-reactive({
-    folders<-list.dirs(recursive = FALSE)
+    folders<-list.dirs(script_path(), recursive = FALSE)
     run<-folders[grepl("run", folders)]
     if(length(run) > 0){
       x<-gsub("\\./", "", run)
@@ -562,7 +562,7 @@ dataInputModule <- function(input, output, session,
   
   script_path<-reactive({
     if (Sys.info()[[4]] == 'PHAGO') {
-      
+      ""
     } else {
       return("/home/rstudio/")
       #"."
