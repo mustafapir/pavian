@@ -528,10 +528,11 @@ dataInputModule <- function(input, output, session,
   })
   
   runid<-reactive({
-    folders<-list.dirs(script_path(), recursive = FALSE)
+    folders<-list.dirs(script_path(), recursive = FALSE, full.names = FALSE)
     run<-folders[grepl("run", folders)]
     if(length(run) > 0){
-      x<-gsub("\\./", "", run)
+      #x<-gsub("\\./", "", run)
+      x<-run
     } else {
       x<-""
     }
