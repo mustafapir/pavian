@@ -529,9 +529,9 @@ dataInputModule <- function(input, output, session,
   
   runid<-reactive({
     folders<-list.dirs(recursive = FALSE)
-    run<-folders[grepl("es", folders)]
+    run<-folders[grepl("run", folders)]
     if(length(run) > 0){
-      x<-run
+      x<-gsub("\\./", "", run)
     } else {
       x<-""
     }
