@@ -13,7 +13,7 @@
 #'
 #' @export
 runApp <- function(cache_dir = "cache",
-                   server_dir = Sys.glob("~"),
+                   server_dir = Sys.glob("/home/rstudio"),
                    server_access = TRUE,
                    load_example_data = FALSE,
                    load_server_directory = FALSE,
