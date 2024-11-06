@@ -53,7 +53,7 @@ uploadFilePanel <- function(ns) {
            "Upload metagenomics report files from the local computer. If selecting multiple files does not work, please
             try with a different browser. With each sample set, you may also include meta-data with a colon-separated sample_data.csv file 
             that has at least the columns 'Name' and 'ReportFile'.",
-           #textOutput(ns("sometext")),
+           textOutput(ns("sometext")),
            fileInput(
              ns("file_upload"),
              label="",
@@ -571,7 +571,8 @@ dataInputModule <- function(input, output, session,
   
   output$sometext<-renderText({
     # list.dirs(paste0(script_path(), "run2490/kraken_tsv/kraken2/raw_kraken"), full.names = TRUE, recursive = FALSE)
-    list.dirs(workdir(), full.names = TRUE, recursive = FALSE)
+    # list.dirs(workdir(), full.names = TRUE, recursive = FALSE)
+    paste0(paste0(script_path(), runid()), "/kreport_tsv/kraken2/raw_kraken")
   })
   
   return(sample_sets)
