@@ -112,12 +112,12 @@ alignmentModule <- function(input, output, session, sample_data, datatable_opts)
   })
   
   server_files<-reactive({
-    run_files <- list.files(paste0(script_path(), "bam"), pattern = "sorted.dedup.bam$",full.names = FALSE)
+    run_files <- list.files(paste0(script_path(), "bam"), pattern = "sorted*.bam$",full.names = FALSE)
     run_files
   })
   
   observeEvent(length(server_files()) > 0, {
-    updateSelectInput(inputId = "server_file_list", choices = server_files())
+    updateSelectInput(inputId = "server_file_list", choices = c("",server_files()))
   })
   
   observe({
