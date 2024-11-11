@@ -541,14 +541,14 @@ dataInputModule <- function(input, output, session,
   
   observe({
     tsv_file_path <- paste0(script_path(), runid())
-    tsv_files <- list.dirs(paste0(tsv_file_path, "/kreport_tsv/kraken2/raw_kraken"), full.names = TRUE, recursive = FALSE)
+    tsv_files <- list.dirs(paste0(tsv_file_path, "/pavian_reports"), full.names = TRUE, recursive = FALSE)
     if (length(tsv_files) > 0) {
       message(sprintf("Loading .tsv file from: %s", tsv_files[1]))
       # Code to load the data from the .tsv file
       # sample_data <- read.delim(tsv_files[1], header = TRUE, sep = "\t")
 
       read_server_directory(
-        paste0(tsv_file_path, "/kreport_tsv/kraken2/raw_kraken"),
+        paste0(tsv_file_path, "/pavian_reports"),
         include_base_dir = FALSE
       )
 
