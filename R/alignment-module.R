@@ -49,11 +49,11 @@ To generate a BAM file, download a genome of interest, and align to it with an a
         uiOutput(ns("warn_Rsamtools"), width = 12),
         shinyjs::hidden(div(id=ns("align_view_rsamtools"),
         fluidRow(
-          column(4,shiny::fileInput(ns("bam_file_upload"),"Upload BAM and BAI file", accept=c(".bam",".bai"), multiple=TRUE)),
-          column(2,shiny::selectInput(ns("server_file_list"), "Select sample", "")),
+          column(5,shiny::fileInput(ns("bam_file_upload"),"Upload BAM and BAI file", accept=c(".bam",".bai"), multiple=TRUE)),
+          #column(2,shiny::selectInput(ns("server_file_list"), "Select sample", "")),
           column(2,shiny::actionButton(ns("btn_load_example_data"), "Load example data")),
-          column(4,shiny::sliderInput(ns("mapq"),"Minimum MAPQ",0,50,0,step=1))),
-        fluidRow(textOutput(ns("sometext1"))),
+          column(5,shiny::sliderInput(ns("mapq"),"Minimum MAPQ",0,50,0,step=1))),
+        #fluidRow(textOutput(ns("sometext1"))),
         uiOutput(ns("info")),
         shinyjs::hidden(shiny::checkboxInput(ns("align_loess"), "Show smoothed LOESS curve")),
         shinyjs::hidden(shiny::checkboxInput(ns("align_moving_avg"), "Show moving average", value = TRUE)),
@@ -111,31 +111,31 @@ alignmentModule <- function(input, output, session, sample_data, datatable_opts)
     }
   })
   
-  server_files<-reactive({
-    run_files <- list.files(paste0(script_path(), "bam"), pattern = "sorted(?:.dedup)?.bam$",full.names = FALSE)
-    run_files
-  })
+  # server_files<-reactive({
+  #   run_files <- list.files(paste0(script_path(), "bam"), pattern = "sorted(?:.dedup)?.bam$",full.names = FALSE)
+  #   run_files
+  # })
   
-  observeEvent(length(server_files()) > 0, {
-    updateSelectInput(inputId = "server_file_list", choices = c("",server_files()))
-  })
+  # observeEvent(length(server_files()) > 0, {
+  #   updateSelectInput(inputId = "server_file_list", choices = c("",server_files()))
+  # })
   
-  observe({
-    message("Loading alignment")
-    run_file <- input$server_file_list
-    #if (file.exists(run_file)) {
-      bam_file_rv$val <- paste0(script_path(), "bam/", run_file)
-    #} else {
-     # info_text$val <- "Could not load example file."
-    #}
-  })
+  # observe({
+  #   message("Loading alignment")
+  #   run_file <- input$server_file_list
+  #   #if (file.exists(run_file)) {
+  #     bam_file_rv$val <- paste0(script_path(), "bam/", run_file)
+  #   #} else {
+  #    # info_text$val <- "Could not load example file."
+  #   #}
+  # })
   
-  output$sometext1<-renderText({
-    bam_file_rv$val
-    #input$bam_file_upload$datapath
-    # server_files()
-    #script_path()
-  })
+  # output$sometext1<-renderText({
+  #   bam_file_rv$val
+  #   #input$bam_file_upload$datapath
+  #   # server_files()
+  #   #script_path()
+  # })
 
   output$bam_name <- renderUI({
     req(bam_file_rv$txt)
