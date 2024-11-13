@@ -51,8 +51,8 @@ To generate a BAM file, download a genome of interest, and align to it with an a
         fluidRow(
           column(5,shiny::fileInput(ns("bam_file_upload"),"Upload BAM and BAI file", accept=c(".bam",".bai"), multiple=TRUE)),
           #column(2,shiny::selectInput(ns("server_file_list"), "Select sample", "")),
-          column(2,shiny::actionButton(ns("btn_load_example_data"), "Load example data")),
-          column(5,shiny::sliderInput(ns("mapq"),"Minimum MAPQ",0,50,0,step=1))),
+          column(3,shiny::actionButton(ns("btn_load_example_data"), "Load example data")),
+          column(4,shiny::sliderInput(ns("mapq"),"Minimum MAPQ",0,50,0,step=1))),
         #fluidRow(textOutput(ns("sometext1"))),
         uiOutput(ns("info")),
         shinyjs::hidden(shiny::checkboxInput(ns("align_loess"), "Show smoothed LOESS curve")),
@@ -102,14 +102,14 @@ alignmentModule <- function(input, output, session, sample_data, datatable_opts)
 # 2> host_removal/${name}.out
   bam_file_rv <- reactiveValues(val = NULL, txt = NULL)
   
-  script_path<-reactive({
-    if (Sys.info()[[4]] == 'PHAGO') {
-      "C:/Users/phago/Desktop/metaphlan_bam/metaphlan/raw_output/"
-    } else {
-      return("/home/rstudio/")
-      #"."
-    }
-  })
+  # script_path<-reactive({
+  #   if (Sys.info()[[4]] == 'PHAGO') {
+  #     "C:/Users/phago/Desktop/metaphlan_bam/metaphlan/raw_output/"
+  #   } else {
+  #     return("/home/rstudio/")
+  #     #"."
+  #   }
+  # })
   
   # server_files<-reactive({
   #   run_files <- list.files(paste0(script_path(), "bam"), pattern = "sorted(?:.dedup)?.bam$",full.names = FALSE)
